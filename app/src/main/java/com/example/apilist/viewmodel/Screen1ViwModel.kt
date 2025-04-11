@@ -1,33 +1,42 @@
+// Archivo: app/src/main/java/com/example/apilist/viewmodel/Screen1ViwModel.kt
 package com.example.apilist.viewmodel
 
+import Repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.apilist.data.Data
-import com.example.apilist.data.database.Repository
-import kotlinx.coroutines.CoroutineScope
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.apilist.data.network.Response.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class Screen1ViwModel {
+class Screen1ViwModel : ViewModel() {
+    // Se usa una lista de Result, pues es la parte de la respuesta que queremos acumular.
+    private val _characters = MutableLiveData<List<Result>>(emptyList())
+    val characters get() = _characters
 
-    private val repository = Repository()
-    private val _characters = MutableLiveData<Data>()
-    val characters = _characters
-    fun getCharacters(){
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = repository.getAllCharacters()
-            withContext(Dispatchers.Main) {
-                if(response.isSuccessful){
-                    _characters.value = response.body()
-                    Log.e("HEcho :", response.message())
-
+    fun getCharacters() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val response = Repository().getAllCharacters()
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        // Extraer la lista de resultados de la respuesta. En caso de nulo se usa una lista vacía.
+                        val newResults = response.body()?.results ?: emptyList()
+                        // Se concatena la nueva lista con la existente.
+                        _characters.value = _characters.value.orEmpty() + newResults
+                        // Ejemplo de log: se imprime el primer nombre del primer resultado.
+                        if (_characters.value?.isNotEmpty() == true) {
+                            Log.d("CHIVATO", "${_characters.value?.get(0)?.name?.first}")
+                        }
+                    } else {
+                        Log.e("Error :", response.message())
+                    }
                 }
-                else{
-                    Log.e("Error :", response.message())
-                }
+            } catch (e: Exception) {
+                Log.e("Exception", e.message ?: "Error desconocido")
             }
         }
     }
-
 }

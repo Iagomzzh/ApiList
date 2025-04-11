@@ -58,22 +58,26 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // RetroFit
-
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
-// Implementación de la SplashScreen
+    // Implementación de la SplashScreen
     implementation(libs.core.splashscreen)
     // MVVM y LiveData
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
     implementation("androidx.compose.runtime:runtime-livedata:1.7.8")
-
     // Constraint Layout
     implementation ("androidx.constraintlayout:constraintlayout:2.2.1")
     implementation ("androidx.constraintlayout:constraintlayout-compose:1.1.1")
-
     // Implementación navegación
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+
+    // Para poder cargar imagenes con URL's
+    implementation("io.coil-kt:coil-compose:2.5.0")
+
+    // Iconos google
+    implementation("androidx.compose.material:material-icons-extended:1.6.0")
+
 }
 
