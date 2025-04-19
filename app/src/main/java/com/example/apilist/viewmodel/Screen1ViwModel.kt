@@ -16,6 +16,14 @@ class Screen1ViwModel : ViewModel() {
     private val _characters = MutableLiveData<List<Result>>(emptyList())
     val characters get() = _characters
 
+    private val _indexDetails = MutableLiveData<Int>(0)
+    val indexDetails = _indexDetails
+
+    fun setIndeDetials(numberIndex: Int){
+        _indexDetails.value = numberIndex
+    }
+
+
     fun getCharacters() {
         viewModelScope.launch(Dispatchers.IO) {
             try {

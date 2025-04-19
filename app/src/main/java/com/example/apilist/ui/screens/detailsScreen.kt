@@ -39,7 +39,7 @@ import com.example.apilist.ui.components.ThinCircle
 
 
 @Composable
-fun DetailsScreen() {
+fun DetailsSc(characterUrl: String, navigateBack: () -> Unit) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -284,10 +284,4 @@ fun DetailsScreen() {
 
 
 
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun Preview() {
-    DetailsScreen()
 }

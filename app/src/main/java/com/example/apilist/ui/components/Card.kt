@@ -1,6 +1,9 @@
 package com.example.apilist.ui.components
+
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,15 +27,26 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.apilist.ui.screens.FavoritesSc
+import com.example.apilist.viewmodel.Screen1ViwModel
+import kotlin.math.log
 
 @Composable
-fun InstagramProfile(profileImage: String, name: String) {
+fun InstagramProfile(profileImage: String, name: String, indice: Int, viewModel: Screen1ViwModel, navController: NavController) {
     Row(
         Modifier
             .fillMaxWidth()
             .background(Color.Black)
-            .padding(10.dp), verticalAlignment = Alignment.CenterVertically
+            .padding(10.dp)
+            .clickable { viewModel.setIndeDetials(indice)
+                Log.d("CHIVATO","$indice")
+
+
+            },
+        verticalAlignment = Alignment.CenterVertically
+
     ) {
 
         Box(
@@ -87,6 +101,4 @@ fun InstagramProfile(profileImage: String, name: String) {
 @Preview(showBackground = true)
 @Composable
 private fun Previeww() {
-    Spacer(Modifier.padding(bottom = 50.dp))
-    InstagramProfile("https://randomuser.me/api/portraits/med/men/31.jpg", "Iago Martinez ")
-}
+    Spacer(Modifier.padding(bottom = 50.dp)) }

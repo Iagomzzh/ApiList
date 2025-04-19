@@ -29,7 +29,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.rememberNavController
 import com.example.apilist.ui.navigation.Destinations
 import com.example.apilist.ui.navigation.NavigationItem
-import com.example.apilist.ui.screens.Prueba
+import com.example.apilist.ui.navigation.NavigationWrapper
+import com.example.apilist.ui.screens.ApiListScreen
 import com.example.apilist.ui.theme.APIListTheme
 import com.example.apilist.viewmodel.Screen1ViwModel
 
@@ -73,13 +74,13 @@ fun MyApp(myViewModel: Screen1ViwModel) {
                         selectedItem = index
                         navController.navigate(item.route)
                     },
-                    colors =  NavigationBarItemDefaults.colors(contentColorFor(Color.Black), unselectedIconColor = Color.Black, )
+                    colors =  NavigationBarItemDefaults.colors(contentColorFor(Color.Black), unselectedIconColor = Color.Black,)
                 )
             }
 
         }
     }) {
-        Prueba(myViewModel)
+        NavigationWrapper(navController, myViewModel)
 
 
     }
