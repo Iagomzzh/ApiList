@@ -8,7 +8,7 @@ import retrofit2.http.GET
 
 interface ApiInterface {
 
-    @GET("api/?results=5&inc=name,picture,nat,login,dob&seed=2910d520e2902cbd&nat=es")
+    @GET("api/?results=50&inc=name,picture,nat,login,dob&seed=2910d520e2902cbd&nat=es")
     suspend fun getData(): Response<userResponse>
 
     companion object {

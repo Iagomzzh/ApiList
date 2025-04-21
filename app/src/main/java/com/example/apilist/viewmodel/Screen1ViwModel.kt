@@ -30,8 +30,14 @@ class Screen1ViwModel : ViewModel() {
 
 
     fun changeStatButoonFollor(indice:Int){
+        _buttonFollow.value = !_buttonFollow.value!!
 
     }
+    fun changeStatButoonFollorFalse(){
+        _buttonFollow.value = false
+
+    }
+
 
     fun setIndeDetials(numberIndex: Int) {
         _indexDetails.value = numberIndex

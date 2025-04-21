@@ -76,6 +76,8 @@ dependencies {
     // Para poder cargar imagenes con URL's
     implementation("io.coil-kt:coil-compose:2.5.0")
 
+    implementation ("androidx.compose.material3:material3:1.1.0-beta01")
+
     // Iconos google
     implementation("androidx.compose.material:material-icons-extended:1.6.0")
 
