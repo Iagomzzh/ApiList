@@ -25,7 +25,7 @@ fun NavigationWrapper(navController: NavHostController, viwModel: Screen1ViwMode
         }
         composable(Destinations.Pantalla11("").route) { backStackEntry ->
             val param = backStackEntry.arguments?.getString("myParameter") ?: ""
-            DetailsSc(param) {
+            DetailsSc(viwModel) {
                 navController.popBackStack()
             }
         }

@@ -2,7 +2,6 @@
 
 package com.example.apilist.ui.screens
 
-import android.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,40 +12,42 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.Circle
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.MoreHoriz
-import androidx.compose.material.icons.outlined.AddCircleOutline
-import androidx.compose.material.icons.outlined.Circle
-import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberAsyncImagePainter
 import com.example.apilist.ui.components.Lockk
 import com.example.apilist.ui.components.ThinCircle
+import com.example.apilist.viewmodel.Screen1ViwModel
 
 
 @Composable
-fun DetailsSc(characterUrl: String, navigateBack: () -> Unit) {
+fun DetailsSc(viwModel: Screen1ViwModel, navigateBack: () -> Unit) {
+    viwModel.getCharacters()
+    val index = viwModel.indexDetails.observeAsState(0)
+    val buttonFollowStats = viwModel.buttonFollow.observeAsState(0)
+
+
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
         // Referencias
-        val (flecha,
+        val (
+            flecha,
             user,
             tresPuntitos,
             imagePerfil,
@@ -62,7 +63,7 @@ fun DetailsSc(characterUrl: String, navigateBack: () -> Unit) {
             circuloVacioParaCandado,
             candado,
             textoPerfilPrivado,
-           ) = createRefs()
+        ) = createRefs()
         val textoPerfilPrivadoDetalles = createRef()
 
 
@@ -94,9 +95,9 @@ fun DetailsSc(characterUrl: String, navigateBack: () -> Unit) {
                     start.linkTo(guiaStart)
 
                 }
-                .clickable { TODO() })
+                .clickable { navigateBack() })
         Text(
-            "iagomzzh",
+            viwModel.characters.value?.get(index.value)!!.name.first,
             color = Color.White,
             fontWeight = FontWeight.ExtraBold,
             fontSize = 16.sp,
@@ -120,7 +121,7 @@ fun DetailsSc(characterUrl: String, navigateBack: () -> Unit) {
 
 
         Image(
-            painter = rememberAsyncImagePainter("https://randomuser.me/api/portraits/women/66.jpg"),
+            painter = rememberAsyncImagePainter(viwModel.characters.value?.get(index.value)!!.picture.large),
             contentDescription = "Imagen de perfil",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -131,10 +132,13 @@ fun DetailsSc(characterUrl: String, navigateBack: () -> Unit) {
                     top.linkTo(guiaTopPerfilDetails)
                     start.linkTo(guiaStart)
                     end.linkTo(user.end)
-                }
-        )
+                })
         Text(
-            "Iago Martínez",
+            "${viwModel.characters.value?.get(index.value)!!.name.first} ${
+                viwModel.characters.value?.get(
+                    index.value
+                )!!.name.last
+            }",
             color = Color.White,
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp,
@@ -148,81 +152,81 @@ fun DetailsSc(characterUrl: String, navigateBack: () -> Unit) {
         ////////////////////////////////////////////////////////////////////////////////A
         // PUBLICACIÓN
         Text(
-            "46", color = Color.White,
+            "${viwModel.characters.value?.get(index.value)!!.dob.age  / 3}",
+            color = Color.White,
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp,
             modifier = Modifier.constrainAs(publicaciones) {
                 start.linkTo(nombre.start)
                 top.linkTo(imagePerfil.top)
                 bottom.linkTo(imagePerfil.bottom)
-            }
-        )
+            })
 
 
         Text(
-            "publicación", color = Color.White,
+            "publicación",
+            color = Color.White,
             fontWeight = FontWeight.Bold,
             fontSize = 12.sp,
             modifier = Modifier.constrainAs(publicaciones_text) {
                 start.linkTo(nombre.start)
                 top.linkTo(guiaEspacioEntreLosNumerosYElTexto)
-            }
-        )
+            })
         ////////////////////////////////////////////////////////////////////////////////A
         // SEGUIDORES
 
         Text(
-            "450", color = Color.White,
+            " ${viwModel.characters.value?.get(index.value)!!.dob.age *5} ",
+            color = Color.White,
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp,
             modifier = Modifier.constrainAs(seguidores) {
                 top.linkTo(imagePerfil.top)
                 start.linkTo(guiaEspacioEntrePublicacionYSeguidores)
                 bottom.linkTo(imagePerfil.bottom)
-            }
-        )
+            })
 
 
         Text(
-            "seguidores", color = Color.White,
+            "seguidores",
+            color = Color.White,
             fontWeight = FontWeight.Bold,
             fontSize = 12.sp,
             modifier = Modifier.constrainAs(seguidores_text) {
                 start.linkTo(seguidores.start)
                 top.linkTo(guiaEspacioEntreLosNumerosYElTexto)
-            }
-        )
+            })
 
 
         ////////////////////////////////////////////////////////////////////////////////A
         // SIGUIENDO
         Text(
-            "448", color = Color.White,
+            "${viwModel.characters.value?.get(index.value)!!.dob.age *5 - 105}",
+            color = Color.White,
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp,
             modifier = Modifier.constrainAs(siguiendo) {
                 top.linkTo(imagePerfil.top)
                 start.linkTo(guiaEspacioEntreSeguidoresYSiguiendo)
                 bottom.linkTo(imagePerfil.bottom)
-            }
-        )
+            })
 
 
         Text(
-            "siguiendo", color = Color.White,
+            "siguiendo",
+            color = Color.White,
             fontWeight = FontWeight.Bold,
             fontSize = 12.sp,
             modifier = Modifier.constrainAs(siguiendo_text) {
                 start.linkTo(siguiendo.start)
                 top.linkTo(guiaEspacioEntreLosNumerosYElTexto)
-            }
-        )
+            })
 
 
         // BIOGRAFIA
 
         Text(
-            "BCN📍\n 18",
+            "${viwModel.characters.value?.get(index.value)!!.nat}📍\nedad: ${viwModel.characters.value?.get(index.value)!!.dob.age}",
             color = Color.White,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.constrainAs(biografia) {
@@ -233,9 +237,9 @@ fun DetailsSc(characterUrl: String, navigateBack: () -> Unit) {
             })
 
         Button(
-            onClick = { TODO() },
+            onClick = { viwModel.changeStatButoonFollor(index.value) },
             shape = RoundedCornerShape(12.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(74, 93, 249)),
+            colors = if (buttonFollowStats.value == false){ButtonDefaults.buttonColors(containerColor = Color(74, 93, 249))} else {ButtonDefaults.buttonColors(containerColor = Color.DarkGray, contentColor = Color.White)},
             modifier = Modifier
                 .fillMaxWidth(0.96f)
                 .constrainAs(botonSeguir) {
@@ -243,45 +247,64 @@ fun DetailsSc(characterUrl: String, navigateBack: () -> Unit) {
                     end.linkTo(guiaEnd)
                     top.linkTo(guiaEspacioEntreBioYBoton)
 
-                })
-        {
-            Text("Seguir")
+                }) {
+            Text(if (buttonFollowStats.value == false){"Seguir"} else{"Siguiendo"})
         }
 
         // Diseño de la cuenta es privada
 
         // Icono
 
-        Icon(imageVector = Icons.Outlined.ThinCircle, contentDescription = null, tint = Color.White ,modifier = Modifier.constrainAs(circuloVacioParaCandado) {
-            start.linkTo(guiaStart)
-            end.linkTo(guiaEnd)
-            top.linkTo(guiaEspacioEntreBotonYCandado)
-        }.size(150.dp))
+        Icon(
+            imageVector = Icons.Outlined.ThinCircle,
+            contentDescription = null,
+            tint = Color.White,
+            modifier = Modifier
+                .constrainAs(circuloVacioParaCandado) {
+                    start.linkTo(guiaStart)
+                    end.linkTo(guiaEnd)
+                    top.linkTo(guiaEspacioEntreBotonYCandado)
+                }
+                .size(150.dp))
 
-        Icon(imageVector = Icons.Filled.Lockk, contentDescription = null, tint = Color.White, modifier = Modifier.constrainAs(candado) {
-            top.linkTo(circuloVacioParaCandado.top)
-            bottom.linkTo(circuloVacioParaCandado.bottom)
-            start.linkTo(circuloVacioParaCandado.start)
-            end.linkTo(circuloVacioParaCandado.end)
-        }.size(100.dp) )
+        Icon(
+            imageVector = Icons.Filled.Lockk,
+            contentDescription = null,
+            tint = Color.White,
+            modifier = Modifier
+                .constrainAs(candado) {
+                    top.linkTo(circuloVacioParaCandado.top)
+                    bottom.linkTo(circuloVacioParaCandado.bottom)
+                    start.linkTo(circuloVacioParaCandado.start)
+                    end.linkTo(circuloVacioParaCandado.end)
+                }
+                .size(100.dp))
 
-    Text("Esta cuenta es privada", fontWeight = FontWeight.W900, color = Color.White, fontSize = 25.sp, modifier = Modifier.constrainAs(textoPerfilPrivado) {
-        top.linkTo(guiaEspacioEntreCandadoYTextoPrivado)
-        start.linkTo(circuloVacioParaCandado.start)
-        end.linkTo(circuloVacioParaCandado.end)
+        Text(
+            "Esta cuenta es privada",
+            fontWeight = FontWeight.W900,
+            color = Color.White,
+            fontSize = 25.sp,
+            modifier = Modifier.constrainAs(textoPerfilPrivado) {
+                top.linkTo(guiaEspacioEntreCandadoYTextoPrivado)
+                start.linkTo(circuloVacioParaCandado.start)
+                end.linkTo(circuloVacioParaCandado.end)
 
-    })
+            })
 
-        Text("Sigue esta cuenta para ver fotos y vídeos", fontWeight = FontWeight.Normal, color = Color.LightGray, fontSize = 16.sp, modifier = Modifier.constrainAs(textoPerfilPrivadoDetalles) {
-        top.linkTo(guiaEspacioEntreTextoPrivadoYTextoPrivadoDetails)
-            start.linkTo(circuloVacioParaCandado.start)
-            end.linkTo(circuloVacioParaCandado.end)
+        Text(
+            "Sigue esta cuenta para ver fotos y vídeos",
+            fontWeight = FontWeight.Normal,
+            color = Color.LightGray,
+            fontSize = 16.sp,
+            modifier = Modifier.constrainAs(textoPerfilPrivadoDetalles) {
+                top.linkTo(guiaEspacioEntreTextoPrivadoYTextoPrivadoDetails)
+                start.linkTo(circuloVacioParaCandado.start)
+                end.linkTo(circuloVacioParaCandado.end)
 
-        })
+            })
 
     }
-
-
 
 
 }

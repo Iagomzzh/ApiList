@@ -12,6 +12,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class Screen1ViwModel : ViewModel() {
+
+    private val _loading = MutableLiveData(true)
+    val loading = _loading
+
+
     // Se usa una lista de Result, pues es la parte de la respuesta que queremos acumular.
     private val _characters = MutableLiveData<List<Result>>(emptyList())
     val characters get() = _characters
@@ -19,7 +24,16 @@ class Screen1ViwModel : ViewModel() {
     private val _indexDetails = MutableLiveData<Int>(0)
     val indexDetails = _indexDetails
 
-    fun setIndeDetials(numberIndex: Int){
+    private val _buttonFollow = MutableLiveData(false)
+    val buttonFollow =_buttonFollow
+
+
+
+    fun changeStatButoonFollor(indice:Int){
+
+    }
+
+    fun setIndeDetials(numberIndex: Int) {
         _indexDetails.value = numberIndex
     }
 
@@ -35,6 +49,8 @@ class Screen1ViwModel : ViewModel() {
                         // Se concatena la nueva lista con la existente.
                         _characters.value = _characters.value.orEmpty() + newResults
                         // Ejemplo de log: se imprime el primer nombre del primer resultado.
+                        _loading.value = false
+
                         if (_characters.value?.isNotEmpty() == true) {
                             Log.d("CHIVATO", "${_characters.value?.get(0)?.name?.first}")
                         }

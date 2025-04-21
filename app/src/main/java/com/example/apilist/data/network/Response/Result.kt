@@ -4,5 +4,7 @@ data class Result(
     val name: Name,
     val nat: String,
     val picture: Picture,
-    val login: Login
+    val login: Login,
+    val dob: Dob
+
 )

@@ -1,4 +1,4 @@
-// Kotlin
+
 package com.example.apilist
 
 import android.annotation.SuppressLint
@@ -13,9 +13,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -30,12 +28,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.apilist.ui.navigation.Destinations
 import com.example.apilist.ui.navigation.NavigationItem
 import com.example.apilist.ui.navigation.NavigationWrapper
-import com.example.apilist.ui.screens.ApiListScreen
 import com.example.apilist.ui.theme.APIListTheme
 import com.example.apilist.viewmodel.Screen1ViwModel
 
 class MainActivity : ComponentActivity() {
-
     private val myViewModel: Screen1ViwModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +45,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -66,22 +61,22 @@ fun MyApp(myViewModel: Screen1ViwModel) {
         NavigationBar {
             items.forEachIndexed { index, item ->
                 NavigationBarItem(
-                    
                     selected = item.index == selectedItem,
                     label = { Text(item.label) },
                     icon = { Icon(imageVector = item.icon, contentDescription = item.label) },
                     onClick = {
                         selectedItem = index
-                        navController.navigate(item.route)
+                        // Se pasa la cadena de ruta en lugar del objeto Destinations
+                        navController.navigate(item.route.route)
                     },
-                    colors =  NavigationBarItemDefaults.colors(contentColorFor(Color.Black), unselectedIconColor = Color.Black,)
+                    colors = NavigationBarItemDefaults.colors(
+                        contentColorFor(Color.Black),
+                        unselectedIconColor = Color.Black
+                    )
                 )
             }
-
         }
     }) {
         NavigationWrapper(navController, myViewModel)
-
-
     }
 }

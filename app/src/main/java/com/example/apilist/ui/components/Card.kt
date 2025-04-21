@@ -18,6 +18,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,7 +35,9 @@ import com.example.apilist.viewmodel.Screen1ViwModel
 import kotlin.math.log
 
 @Composable
-fun InstagramProfile(profileImage: String, name: String, indice: Int, viewModel: Screen1ViwModel, navController: NavController) {
+fun InstagramProfile(profileImage: String, name: String, indice: Int, viewModel: Screen1ViwModel,  navController: NavController) {
+    val buttonFollowStats = viewModel.buttonFollow.observeAsState(0)
+
     Row(
         Modifier
             .fillMaxWidth()
@@ -42,6 +45,7 @@ fun InstagramProfile(profileImage: String, name: String, indice: Int, viewModel:
             .padding(10.dp)
             .clickable { viewModel.setIndeDetials(indice)
                 Log.d("CHIVATO","$indice")
+                navController.navigate("pantalla11/$indice")
 
 
             },
@@ -91,7 +95,7 @@ fun InstagramProfile(profileImage: String, name: String, indice: Int, viewModel:
         Button(
             onClick = {},
             shape = RoundedCornerShape(12.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4C5CFF))
+            colors = if (buttonFollowStats.value == false){ButtonDefaults.buttonColors(containerColor = Color(74, 93, 249))} else {ButtonDefaults.buttonColors(containerColor = Color.DarkGray, contentColor = Color.White)},
         ) {
             Text("seguir")
         }
