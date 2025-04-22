@@ -11,6 +11,9 @@ interface ApiInterface {
     @GET("api/?results=50&inc=name,picture,nat,login,dob&seed=2910d520e2902cbd&nat=es")
     suspend fun getData(): Response<userResponse>
 
+    suspend fun getDataForId(characterId: Int): Response<userResponse>
+
+
     companion object {
         private const val BASE_URL = "https://randomuser.me/"
 

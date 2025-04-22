@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.apilist.ui.screens.ApiListScreen
 import com.example.apilist.ui.screens.DetailsSc
-import com.example.apilist.ui.screens.FavoritesSc
+import com.example.apilist.ui.screens.FavoritesScreen
 import com.example.apilist.ui.screens.SettingsSc
 import com.example.apilist.viewmodel.Screen1ViwModel
 
@@ -18,7 +18,7 @@ fun NavigationWrapper(navController: NavHostController, viwModel: Screen1ViwMode
             ApiListScreen(viwModel, navController)
         }
         composable(Destinations.Pantalla2.route) {
-            FavoritesSc()
+            FavoritesScreen(viwModel)
         }
         composable(Destinations.Pantalla3.route) {
             SettingsSc()

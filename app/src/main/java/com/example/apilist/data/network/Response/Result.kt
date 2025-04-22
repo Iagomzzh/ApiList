@@ -6,5 +6,4 @@ data class Result(
     val picture: Picture,
     val login: Login,
     val dob: Dob
-
 )
