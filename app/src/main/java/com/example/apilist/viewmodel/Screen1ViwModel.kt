@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.apilist.data.database.CharacterApp
 import com.example.apilist.data.database.CharacterEntity
 import com.example.apilist.data.network.Response.Result
 import kotlinx.coroutines.Dispatchers
@@ -100,6 +101,17 @@ class Screen1ViwModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 Log.e("fetchFavorites", e.message ?: "Error al obtener favoritos")
+            }
+        }
+    }
+
+    fun deleteAllLocal() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                repository.deleteAllLocal()
+                fetchFavorites()
+            } catch (e: Exception) {
+                Log.e("deleteAllLocal", e.message ?: "Error eliminando elementos locales")
             }
         }
     }

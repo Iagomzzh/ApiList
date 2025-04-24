@@ -21,7 +21,7 @@ fun NavigationWrapper(navController: NavHostController, viwModel: Screen1ViwMode
             FavoriteListScreen(viwModel, navController)
         }
         composable(Destinations.Pantalla3.route) {
-            SettingsSc()
+            SettingsSc(viwModel)
         }
         composable(Destinations.Pantalla11("").route) { backStackEntry ->
             val param = backStackEntry.arguments?.getString("myParameter") ?: ""

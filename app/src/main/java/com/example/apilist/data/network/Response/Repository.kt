@@ -10,6 +10,9 @@ class Repository {
     //get id
     // suspend fun getCharacterId(characterId: Int) = apiInterface.getDataId(characterId)
 
+    suspend fun deleteAllLocal() {
+        CharacterApp.database.characterDao().deleteAllCharacters()
+    }
     //get all
     suspend fun getAllCharacters() = apiInterface.getData()
 
